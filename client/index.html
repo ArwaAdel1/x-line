@@ -3345,6 +3345,41 @@
       }
     }
 
+    async function uploadToCloudinary(file, type) {
+      const formData = new FormData();
+      formData.append('image', file);
+      const headers = {};
+      if (authToken) headers['Authorization'] = 'Bearer ' + authToken;
+      const res = await fetch(API + '/upload/' + type, { method: 'POST', headers, body: formData });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.message || (lang === 'ar' ? 'فشل رفع الصورة' : 'Upload failed'));
+      return json.data;
+    }
+
+    function cloudinaryImg(url, width) {
+      if (!url) return '';
+      if (!url.includes('cloudinary.com') || url.startsWith('data:')) return url;
+      if (url.includes('/upload/f_auto') || url.includes('/upload/w_')) return url;
+      return url.replace('/upload/', `/upload/f_auto,q_auto,w_${width}/`);
+    }
+
+    function applySiteInfo(info) {
+      if (!info) return;
+      const setVal = (id, val) => { const el = document.getElementById(id); if (el && val != null) el.value = val; };
+      setVal('info-name-ar', info.nameAr);
+      setVal('info-name-en', info.nameEn);
+      setVal('info-address', info.address);
+      setVal('info-phone', info.phone);
+      setVal('info-email', info.email);
+      if (info.phone) { const el = document.getElementById('fc-phone'); if (el) el.textContent = info.phone; }
+      if (info.email) { const el = document.getElementById('fc-email'); if (el) el.textContent = info.email; }
+      if (info.address) { const el = document.getElementById('fc-addr'); if (el) el.textContent = info.address; }
+      if (info.logo) {
+        window._siteLogoUrl = info.logo;
+        applyLogo(info.logo);
+      }
+    }
+
     async function loadPublicData() {
       try {
         const [svc, team, proj, blogs, faqs, info] = await Promise.all([
@@ -3360,7 +3395,7 @@
         data.projects = proj.data || [];
         data.blogs = blogs.data || [];
         data.faqs = faqs.data || [];
-        if (info.data && info.data.logo) applyLogo(info.data.logo);
+        if (info.data) applySiteInfo(info.data);
         renderCurrentPage();
       } catch (err) {
         console.error('Failed to load public data:', err);
@@ -3370,13 +3405,14 @@
 
     async function loadAdminData() {
       try {
-        const [svc, team, proj, msg, blogs, faqs] = await Promise.all([
+        const [svc, team, proj, msg, blogs, faqs, info] = await Promise.all([
           apiFetch('/services/all'),
           apiFetch('/team/all'),
           apiFetch('/projects/all'),
           apiFetch('/messages'),
           apiFetch('/blogs/all'),
           apiFetch('/faqs/all'),
+          apiFetch('/siteinfo'),
         ]);
         data.services = svc.data || [];
         data.team = team.data || [];
@@ -3384,6 +3420,7 @@
         data.messages = msg.data || [];
         data.blogs = blogs.data || [];
         data.faqs = faqs.data || [];
+        if (info.data) applySiteInfo(info.data);
         renderAdminDashboard();
       } catch (err) {
         showToast(err.message, 'error');
@@ -3840,12 +3877,13 @@
       const grid = document.getElementById('team-grid');
       if (!grid) return;
       grid.innerHTML = data.team.map((m, i) => {
-        const hasPhoto = m.photo && m.photo.length > 0;
+        const hasPhoto = m.photo && m.photo.length > 0 && !m.photo.startsWith('data:');
+        const photoSrc = hasPhoto ? cloudinaryImg(m.photo, 500) : '';
         return `
     <div class="team-card fade-up" style="transition-delay:${i * 0.08}s">
       <div class="team-card-img${hasPhoto ? ' has-photo' : ''}">
         ${hasPhoto
-            ? `<img src="${m.photo}" alt="${lang === 'ar' ? m.nameAr : m.nameEn}" loading="lazy">`
+            ? `<img src="${photoSrc}" alt="${lang === 'ar' ? m.nameAr : m.nameEn}" loading="lazy">`
             : `<span class="team-placeholder">${m.emoji}</span>`
           }
         <div class="team-card-overlay">
@@ -4011,7 +4049,7 @@
     ${data.team.map((m, i) => `<tr>
       <td>
         <div style="width:40px;height:40px;border-radius:50%;overflow:hidden;background:var(--blue-50);display:flex;align-items:center;justify-content:center;font-size:20px;border:2px solid var(--gray-100);">
-          ${m.photo ? `<img src="${m.photo}" style="width:100%;height:100%;object-fit:cover;">` : m.emoji}
+          ${m.photo && !m.photo.startsWith('data:') ? `<img src="${cloudinaryImg(m.photo, 80)}" style="width:100%;height:100%;object-fit:cover;">` : m.emoji}
         </div>
       </td>
       <td>${lang === 'ar' ? m.nameAr : m.nameEn}</td>
@@ -4100,13 +4138,18 @@
     }
 
     function saveInfo() {
+      const logo = window._siteLogoUrl || '';
+      if (logo.startsWith('data:')) {
+        showToast(lang === 'ar' ? 'ارفع اللوجو مرة أخرى عبر زر الرفع' : 'Re-upload the logo using the upload button', 'error');
+        return;
+      }
       const body = {
         nameAr: document.getElementById('info-name-ar').value,
         nameEn: document.getElementById('info-name-en').value,
         address: document.getElementById('info-address').value,
         phone: document.getElementById('info-phone').value,
         email: document.getElementById('info-email').value,
-        logo: window._siteLogoUrl || ''
+        logo,
       };
       apiFetch('/siteinfo', { method: 'PUT', body: JSON.stringify(body) })
         .then(() => {
@@ -4132,13 +4175,14 @@
       if (type === 'add-team' || type === 'edit-team') {
         const m = type === 'edit-team' ? data.team[idx] : {};
         title.textContent = type === 'add-team' ? (lang === 'ar' ? 'إضافة عضو' : 'Add Member') : (lang === 'ar' ? 'تعديل عضو' : 'Edit Member');
-        const hasPhoto = m.photo && m.photo.length > 0;
+        const hasPhoto = m.photo && m.photo.length > 0 && !m.photo.startsWith('data:');
+        const modalPhotoSrc = hasPhoto ? cloudinaryImg(m.photo, 150) : '';
         body.innerHTML = `
       <div class="form-group">
         <label class="form-label">${lang === 'ar' ? 'صورة العضو' : 'Member Photo'}</label>
         <div style="display:flex;align-items:center;gap:16px;margin-bottom:4px;">
           <div id="team-photo-preview" style="width:72px;height:72px;border-radius:50%;overflow:hidden;background:var(--blue-50);display:flex;align-items:center;justify-content:center;font-size:32px;border:2px solid var(--gray-200);flex-shrink:0;">
-            ${hasPhoto ? `<img src="${m.photo}" style="width:100%;height:100%;object-fit:cover;">` : (m.emoji || '👨‍💼')}
+            ${hasPhoto ? `<img src="${modalPhotoSrc}" style="width:100%;height:100%;object-fit:cover;">` : (m.emoji || '👨‍💼')}
           </div>
           <div>
             <input type="file" id="team-photo-input" accept="image/*" style="display:none" onchange="previewTeamPhoto(event)">
@@ -4232,8 +4276,13 @@
     }
 
     function saveTeamMember() {
+      const photo = document.getElementById('m-photo').value;
+      if (photo.startsWith('data:')) {
+        showToast(lang === 'ar' ? 'انتظر اكتمال رفع الصورة أو ارفعها من جديد' : 'Wait for upload to finish or upload again', 'error');
+        return;
+      }
       const member = {
-        photo: document.getElementById('m-photo').value,
+        photo,
         emoji: document.getElementById('m-emoji').value,
         nameAr: document.getElementById('m-namear').value,
         nameEn: document.getElementById('m-nameen').value,
@@ -4338,35 +4387,56 @@
     }
 
     // ===== PHOTO HELPERS =====
-    function previewTeamPhoto(event) {
+    async function previewTeamPhoto(event) {
       const file = event.target.files[0];
       if (!file) return;
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const dataUrl = e.target.result;
-        document.getElementById('m-photo').value = dataUrl;
-        const preview = document.getElementById('team-photo-preview');
-        preview.innerHTML = `<img src="${dataUrl}" style="width:100%;height:100%;object-fit:cover;">`;
-      };
-      reader.readAsDataURL(file);
+      if (file.size > 5 * 1024 * 1024) {
+        showToast(lang === 'ar' ? 'حجم الصورة أكبر من 5 ميجابايت' : 'Image is larger than 5MB', 'error');
+        return;
+      }
+      const preview = document.getElementById('team-photo-preview');
+      preview.innerHTML = '<span style="font-size:12px">...</span>';
+      try {
+        const uploaded = await uploadToCloudinary(file, 'team');
+        document.getElementById('m-photo').value = uploaded.url;
+        preview.innerHTML = `<img src="${cloudinaryImg(uploaded.url, 200)}" style="width:100%;height:100%;object-fit:cover;">`;
+        showToast(lang === 'ar' ? 'تم رفع الصورة ✅' : 'Photo uploaded ✅');
+      } catch (err) {
+        preview.innerHTML = document.getElementById('m-emoji').value || '👨‍💼';
+        showToast(err.message, 'error');
+      }
     }
 
-    function clearTeamPhoto() {
+    async function clearTeamPhoto() {
+      const current = document.getElementById('m-photo').value;
+      if (current && current.includes('cloudinary.com') && authToken) {
+        try {
+          await apiFetch('/upload/image', { method: 'DELETE', body: JSON.stringify({ url: current }) });
+        } catch (e) { /* ignore */ }
+      }
       document.getElementById('m-photo').value = '';
       const emoji = document.getElementById('m-emoji').value || '👨‍💼';
       document.getElementById('team-photo-preview').innerHTML = emoji;
     }
 
     // ===== LOGO FUNCTIONS =====
-    function handleLogoUpload(event) {
+    async function handleLogoUpload(event) {
       const file = event.target.files[0];
       if (!file) return;
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const dataUrl = e.target.result;
-        applyLogo(dataUrl);
-      };
-      reader.readAsDataURL(file);
+      if (file.size > 5 * 1024 * 1024) {
+        showToast(lang === 'ar' ? 'حجم الصورة أكبر من 5 ميجابايت' : 'Image is larger than 5MB', 'error');
+        return;
+      }
+      try {
+        showToast(lang === 'ar' ? 'جارٍ رفع اللوجو...' : 'Uploading logo...');
+        const uploaded = await uploadToCloudinary(file, 'logo');
+        window._siteLogoUrl = uploaded.url;
+        applyLogo(cloudinaryImg(uploaded.url, 300));
+        showToast(lang === 'ar' ? 'تم رفع اللوجو ✅' : 'Logo uploaded ✅');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+      event.target.value = '';
     }
 
     function applyLogo(dataUrl) {
@@ -4396,13 +4466,25 @@
       const prevImg = document.getElementById('logo-preview-img');
       const prevFallback = document.getElementById('logo-preview-fallback');
       if (prevImg && prevFallback) {
-        prevImg.src = dataUrl; prevImg.style.display = 'block'; prevFallback.style.display = 'none';
+        const previewSrc = String(dataUrl).includes('cloudinary.com') ? cloudinaryImg(dataUrl, 160) : dataUrl;
+        prevImg.src = previewSrc;
+        prevImg.style.display = 'block';
+        prevFallback.style.display = 'none';
+        const box = document.getElementById('logo-preview-box');
+        if (box && String(dataUrl).includes('cloudinary.com')) box.style.background = 'transparent';
       }
-      // Save to memory
-      window._siteLogoUrl = dataUrl;
+      if (!String(dataUrl).startsWith('data:')) {
+        window._siteLogoUrl = dataUrl;
+      }
     }
 
-    function removeLogo() {
+    async function removeLogo() {
+      const current = window._siteLogoUrl;
+      if (current && current.includes('cloudinary.com') && authToken) {
+        try {
+          await apiFetch('/upload/image', { method: 'DELETE', body: JSON.stringify({ url: current }) });
+        } catch (e) { /* ignore */ }
+      }
       window._siteLogoUrl = null;
       const navIcon = document.getElementById('nav-logo-icon');
       const navImg = document.getElementById('nav-logo-img');
@@ -4423,6 +4505,8 @@
       const prevImg = document.getElementById('logo-preview-img');
       const prevFallback = document.getElementById('logo-preview-fallback');
       if (prevImg && prevFallback) { prevImg.src = ''; prevImg.style.display = 'none'; prevFallback.style.display = ''; }
+      const box = document.getElementById('logo-preview-box');
+      if (box) box.style.background = '';
       document.getElementById('logo-upload-input').value = '';
     }
 

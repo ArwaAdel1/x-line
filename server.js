@@ -19,6 +19,7 @@ app.use('/api/blogs',        require('./routes/blogs'));
 app.use('/api/faqs',         require('./routes/faqs'));
 app.use('/api/testimonials', require('./routes/testimonials'));
 app.use('/api/siteinfo',     require('./routes/siteinfo'));
+app.use('/api/upload',       require('./routes/upload'));
 
 app.get('/api/health', (req, res) => {
   res.json({ success: true, message: '🚀 Server running with MongoDB + Mongoose' });
