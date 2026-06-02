@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>البناء الراسخ | Solid Build</title>
+  <title>لاين التطوير | LINE Development</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link
     href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Montserrat:wght@300;400;500;600;700&display=swap"
@@ -191,7 +191,13 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center center;
       pointer-events: none;
+    }
+
+    #hero-video {
+      object-position: center 42%;
+      min-width: 100%;
     }
 
     .video-bg-overlay {
@@ -217,6 +223,10 @@
 
     .page-hero:hover .video-bg-overlay {
       background: linear-gradient(135deg, rgba(4, 44, 83, 0.60), rgba(24, 95, 165, 0.55));
+    }
+
+    .nav-logo .nav-logo-text {
+      display: none;
     }
 
     .nav-logo-text {
@@ -246,7 +256,7 @@
     .nav-links a {
       padding: 8px 16px;
       border-radius: 8px;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 500;
       color: var(--gray-600);
       text-decoration: none;
@@ -495,16 +505,36 @@
     .hero-badge {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
       background: rgba(255, 255, 255, 0.15);
       border: 1px solid rgba(255, 255, 255, 0.25);
       backdrop-filter: blur(10px);
-      padding: 8px 20px;
+      padding: 10px 28px;
       border-radius: 50px;
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.9);
+      font-size: 15px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.95);
       margin-bottom: 28px;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.02em;
+      max-width: min(100%, 520px);
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    #hero-badge-text {
+      white-space: nowrap;
+    }
+
+    @media (max-width: 520px) {
+      #hero-badge-text {
+        white-space: normal;
+      }
+
+      .hero-badge {
+        padding: 8px 18px;
+        font-size: 14px;
+      }
     }
 
     .hero-badge span {
@@ -2284,7 +2314,7 @@
     .mobile-menu a {
       padding: 14px 16px;
       border-radius: 10px;
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 500;
       color: var(--gray-600);
       text-decoration: none;
@@ -2635,8 +2665,8 @@
         <span id="nav-logo-fallback" style="font-size:11px;font-weight:900;letter-spacing:-1px;">LINE</span>
       </div>
       <div class="nav-logo-text">
-        <div class="logo-main" id="nav-brand">البناء الراسخ</div>
-        <div class="logo-sub">LINE Dev & Innovation</div>
+        <div class="logo-main" id="nav-brand">لاين التطوير</div>
+        <div class="logo-sub">LINE Development</div>
       </div>
     </a>
     <ul class="nav-links" id="nav-links">
@@ -2696,7 +2726,7 @@
       <div class="hero-content">
         <div class="hero-badge">
           <span></span>
-          <span id="hero-badge-text">شركة رائدة في المقاولات منذ 2005</span>
+          <span id="hero-badge-text">لاين التطوير</span>
         </div>
         <h1 class="hero-title">
           <span id="hero-line1">نبني أحلامك</span><br>
@@ -2804,7 +2834,7 @@
         <div class="about-intro fade-up">
           <div class="about-intro-text">
             <h2 id="about-intro-h">قصتنا تبدأ من <span>الأساس</span></h2>
-            <p id="about-intro-p1">تأسست شركة البناء الراسخ عام 2005 على يد نخبة من المهندسين المتخصصين برؤية واحدة:
+            <p id="about-intro-p1">تأسست شركة لاين التطوير عام 2005 على يد نخبة من المهندسين المتخصصين برؤية واحدة:
               تقديم خدمات إنشائية بجودة لا تُنافس.</p>
             <p id="about-intro-p2">على مدار عشرين عاماً، أنجزنا أكثر من 500 مشروع متنوع بين المشاريع السكنية والتجارية
               والصناعية في أنحاء المنطقة.</p>
@@ -2812,7 +2842,7 @@
               وبالمواصفات المتفق عليها.</p>
           </div>
           <div class="about-img-box">
-            <p id="about-img-label">شركة البناء الراسخ منذ 2005</p>
+            <p id="about-img-label">شركة لاين التطوير منذ 2005</p>
           </div>
         </div>
 
@@ -3334,11 +3364,11 @@
           </div>
           <div class="form-group">
             <label class="form-label">اسم الشركة (عربي)</label>
-            <input type="text" class="form-input" id="info-name-ar" value="شركة لاين التطوير والإبداع">
+            <input type="text" class="form-input" id="info-name-ar" value="لاين التطوير">
           </div>
           <div class="form-group">
             <label class="form-label">اسم الشركة (إنجليزي)</label>
-            <input type="text" class="form-input" id="info-name-en" value="LINE Development and Innovation Co.">
+            <input type="text" class="form-input" id="info-name-en" value="LINE Development">
           </div>
           <div class="form-group">
             <label class="form-label">العنوان</label>
@@ -3369,12 +3399,11 @@
             <span id="footer-logo-fallback" style="font-size:11px;font-weight:900;letter-spacing:-1px;">LINE</span>
           </div>
           <div class="footer-brand-text" id="footer-brand-text">
-            <div class="logo-main" id="footer-brand-name">البناء الراسخ</div>
-            <div class="logo-sub" id="footer-brand-sub">LINE Dev & Innovation</div>
+            <div class="logo-main" id="footer-brand-name">لاين التطوير</div>
+            <div class="logo-sub" id="footer-brand-sub" style="display:none;">LINE Development</div>
           </div>
         </div>
-        <p id="footer-desc">شركة رائدة في مجال المقاولات والإنشاءات، نقدم حلولاً هندسية متكاملة بأعلى معايير الجودة
-          والاحترافية.</p>
+        <p id="footer-desc">شركة لاين التطوير — نقدم حلولاً هندسية وإنشائية متكاملة بأعلى معايير الجودة والاحترافية.</p>
       </div>
       <div class="footer-col">
         <h4 id="footer-quick">روابط سريعة</h4>
@@ -3395,7 +3424,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span id="footer-copy">© 2025 البناء الراسخ. جميع الحقوق محفوظة.</span>
+      <span id="footer-copy">© 2025 لاين التطوير. جميع الحقوق محفوظة.</span>
       <div class="footer-social">
         <a href="https://www.instagram.com/line.development" target="_blank">📷</a>
         <a href="https://www.facebook.com/share/1GbASh4ELB/" target="_blank">f</a>
@@ -3649,10 +3678,10 @@
 
     const t = {
       ar: {
-        brand: 'لاين للتطوير',
+        brand: 'لاين التطوير',
         navHome: 'الرئيسية', navAbout: 'من نحن', navServices: 'خدماتنا', navPay: 'الخدمات والدفع', navTeam: 'فريق العمل', navProjects: 'أعمالنا', navFaqs: 'الأسئلة الشائعة', navNews: 'أخبارنا', navContact: 'تواصل معنا',
         loginBtn: 'تسجيل دخول', langBtn: 'EN',
-        heroBadge: 'شركة لاين التطوير والإبداع',
+        heroBadge: 'لاين التطوير',
         heroLine1: 'نبني أحلامك', heroLine2: 'بأيدٍ موثوقة',
         heroSub: 'خبرة تمتد لأكثر من عشرين عاماً في تنفيذ المشاريع الإنشائية الكبرى والصغيرة بأعلى معايير الجودة والكفاءة',
         heroBtn1: 'استكشف خدماتنا', heroBtn2: 'تواصل معنا',
@@ -3667,10 +3696,10 @@
         ],
         aboutH1: 'من نحن', aboutHeroP: 'نحكي قصة شركة بُنيت على الشغف والخبرة والالتزام',
         aboutIntroH: 'قصتنا تبدأ من الأساس', aboutIntroSpan: 'الأساس',
-        aboutP1: 'تأسست شركة البناء الراسخ عام 2005 على يد نخبة من المهندسين المتخصصين برؤية واحدة: تقديم خدمات إنشائية بجودة لا تُنافس.',
+        aboutP1: 'تأسست شركة لاين التطوير عام 2005 على يد نخبة من المهندسين المتخصصين برؤية واحدة: تقديم خدمات إنشائية بجودة لا تُنافس.',
         aboutP2: 'على مدار عشرين عاماً، أنجزنا أكثر من 500 مشروع متنوع بين المشاريع السكنية والتجارية والصناعية في أنحاء المنطقة.',
         aboutP3: 'فريقنا المتكامل من المهندسين والفنيين يعمل بمنهجية دقيقة تضمن تسليم كل مشروع في موعده وبالمواصفات المتفق عليها.',
-        aboutImgLabel: 'شركة البناء الراسخ منذ 2005',
+        aboutImgLabel: 'شركة لاين التطوير منذ 2005',
         valuesTag: 'قيمنا', valuesTitle: 'المبادئ التي', valuesTitleBlue: 'تحكمنا',
         values: [
           { icon: '🎯', title: 'الدقة', desc: 'نؤمن أن التفاصيل هي ما تصنع الفارق بين مشروع عادي وآخر استثنائي' },
@@ -3701,9 +3730,9 @@
         loginH: 'لوحة التحكم', loginP: 'تسجيل دخول المسؤول فقط',
         userLabel: 'اسم المستخدم', passLabel: 'كلمة المرور', loginDoBtn: 'دخول', loginBack: '← العودة للموقع',
         loginError: '❌ اسم المستخدم أو كلمة المرور غير صحيحة',
-        footerDesc: 'شركة لاين للتطوير والإبداع — نقدم حلولاً هندسية وإنشائية متكاملة بأعلى معايير الجودة والاحترافية.',
+        footerDesc: 'شركة لاين التطوير — نقدم حلولاً هندسية وإنشائية متكاملة بأعلى معايير الجودة والاحترافية.',
         footerQuick: 'روابط سريعة', footerSvcH: 'خدماتنا', footerContactH: 'تواصل معنا',
-        footerCopy: '© 2025 شركة لاين التطوير والإبداع. جميع الحقوق محفوظة.',
+        footerCopy: '© 2025 لاين التطوير. جميع الحقوق محفوظة.',
         breadHome: 'الرئيسية', breadAbout: 'من نحن', breadSvc: 'خدماتنا', breadTeam: 'فريق العمل', breadContact: 'تواصل معنا',
         projH1: 'أعمالنا', projHeroP: 'مشاريع تتحدث عن نفسها',
         projFilterAll: 'الكل', projectsEmpty: 'لا توجد مشاريع',
@@ -3724,10 +3753,10 @@
         badgeNew: 'جديد', badgeRead: 'مقروء',
       },
       en: {
-        brand: 'LINE Dev',
+        brand: 'LINE Development',
         navHome: 'Home', navAbout: 'About', navServices: 'Services', navPay: 'Services & Payment', navTeam: 'Our Team', navProjects: 'Our Work', navFaqs: 'FAQs', navNews: 'News', navContact: 'Contact',
         loginBtn: 'Login', langBtn: 'عربي',
-        heroBadge: 'LINE Development and Innovation Co.',
+        heroBadge: 'LINE Development',
         heroLine1: 'We Build Your Dreams', heroLine2: 'With Trusted Hands',
         heroSub: 'Over twenty years of experience executing major and minor construction projects to the highest standards of quality and efficiency',
         heroBtn1: 'Explore Services', heroBtn2: 'Contact Us',
@@ -3742,10 +3771,10 @@
         ],
         aboutH1: 'About Us', aboutHeroP: 'The story of a company built on passion, experience, and commitment',
         aboutIntroH: 'Our Story Starts From The Foundation', aboutIntroSpan: 'Foundation',
-        aboutP1: 'Solid Build was founded in 2005 by a team of specialized engineers with one vision: delivering construction services with unmatched quality.',
+        aboutP1: 'LINE Development was founded in 2005 by a team of specialized engineers with one vision: delivering construction services with unmatched quality.',
         aboutP2: 'Over twenty years, we have completed more than 500 diverse projects including residential, commercial, and industrial across the region.',
         aboutP3: 'Our integrated team of engineers and technicians works with precise methodology to ensure every project is delivered on time and to specifications.',
-        aboutImgLabel: 'Solid Build Co. Since 2005',
+        aboutImgLabel: 'LINE Development Since 2005',
         valuesTag: 'Our Values', valuesTitle: 'The Principles That', valuesTitleBlue: 'Guide Us',
         values: [
           { icon: '🎯', title: 'Precision', desc: 'We believe details are what make the difference between an ordinary and an exceptional project' },
@@ -3776,9 +3805,9 @@
         loginH: 'Admin Panel', loginP: 'Admin Access Only',
         userLabel: 'Username', passLabel: 'Password', loginDoBtn: 'Login', loginBack: '← Back to Site',
         loginError: '❌ Invalid username or password',
-        footerDesc: 'LINE Development and Innovation Co. — providing integrated engineering and construction solutions to the highest standards.',
+        footerDesc: 'LINE Development — providing integrated engineering and construction solutions to the highest standards.',
         footerQuick: 'Quick Links', footerSvcH: 'Services', footerContactH: 'Contact Us',
-        footerCopy: '© 2025 LINE Development and Innovation Co. All Rights Reserved.',
+        footerCopy: '© 2025 LINE Development. All Rights Reserved.',
         breadHome: 'Home', breadAbout: 'About', breadSvc: 'Services', breadTeam: 'Team', breadContact: 'Contact',
         projH1: 'Our Work', projHeroP: 'Projects that speak for themselves',
         projFilterAll: 'All', projectsEmpty: 'No projects found',

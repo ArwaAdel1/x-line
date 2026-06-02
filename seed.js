@@ -38,9 +38,9 @@ const PROJECTS = [
 ];
 
 const BLOGS = [
-  { emoji:'🏗️', titleAr:'إنجاز برج الأعمال المركزي بالرياض', titleEn:'Completion of Central Business Tower in Riyadh', excerptAr:'أعلنت شركة البناء الراسخ عن إتمام مشروع برج الأعمال المركزي في قلب الرياض بنجاح تام وفي الموعد المحدد.', excerptEn:'Solid Build announced the successful completion of the Central Business Tower project in the heart of Riyadh, on schedule.', tagAr:'إنجازات', tagEn:'Achievements', date:'2024-03-15', active:true },
+  { emoji:'🏗️', titleAr:'إنجاز برج الأعمال المركزي بالرياض', titleEn:'Completion of Central Business Tower in Riyadh', excerptAr:'أعلنت شركة لاين التطوير عن إتمام مشروع برج الأعمال المركزي في قلب الرياض بنجاح تام وفي الموعد المحدد.', excerptEn:'LINE Development announced the successful completion of the Central Business Tower project in the heart of Riyadh, on schedule.', tagAr:'إنجازات', tagEn:'Achievements', date:'2024-03-15', active:true },
   { emoji:'💡', titleAr:'تبني تقنية BIM في جميع مشاريعنا', titleEn:'Adopting BIM Technology Across All Our Projects', excerptAr:'تعتمد الشركة اليوم تقنية نمذجة معلومات البناء BIM كمعيار أساسي في جميع مشاريعها.', excerptEn:'The company now adopts BIM technology as a core standard across all its projects.', tagAr:'تقنية', tagEn:'Technology', date:'2024-01-20', active:true },
-  { emoji:'🏆', titleAr:'نحصد جائزة أفضل شركة مقاولات 2024', titleEn:'We Win Best Construction Company Award 2024', excerptAr:'حصدت شركة البناء الراسخ جائزة أفضل شركة مقاولات للعام 2024 من مجلس المقاولين السعوديين.', excerptEn:'Solid Build won the Best Construction Company Award for 2024 from the Saudi Contractors Council.', tagAr:'جوائز', tagEn:'Awards', date:'2023-12-05', active:true },
+  { emoji:'🏆', titleAr:'نحصد جائزة أفضل شركة مقاولات 2024', titleEn:'We Win Best Construction Company Award 2024', excerptAr:'حصدت شركة لاين التطوير جائزة أفضل شركة مقاولات للعام 2024 من مجلس المقاولين السعوديين.', excerptEn:'LINE Development won the Best Construction Company Award for 2024 from the Saudi Contractors Council.', tagAr:'جوائز', tagEn:'Awards', date:'2023-12-05', active:true },
 ];
 
 const FAQS = [
@@ -52,13 +52,13 @@ const FAQS = [
 ];
 
 const TESTIMONIALS = [
-  { nameAr:'محمد السالم', nameEn:'Mohammed Al-Salem', roleAr:'مالك مجمع تجاري', roleEn:'Commercial Complex Owner', textAr:'شركة البناء الراسخ تجاوزت كل توقعاتي. التزام بالمواعيد وجودة عالية في كل التفاصيل.', textEn:'Solid Build exceeded all my expectations. On-time delivery and high quality in every detail.', stars:5, active:true },
+  { nameAr:'محمد السالم', nameEn:'Mohammed Al-Salem', roleAr:'مالك مجمع تجاري', roleEn:'Commercial Complex Owner', textAr:'شركة لاين التطوير تجاوزت كل توقعاتي. التزام بالمواعيد وجودة عالية في كل التفاصيل.', textEn:'LINE Development exceeded all my expectations. On-time delivery and high quality in every detail.', stars:5, active:true },
   { nameAr:'نوف العتيبي', nameEn:'Nouf Al-Otaibi', roleAr:'مديرة مشروع سكني', roleEn:'Residential Project Manager', textAr:'تعاملت معهم في مشروع سكني كبير وكانوا على قدر المسؤولية في كل مرحلة.', textEn:'I worked with them on a large residential project and they were up to the task at every stage.', stars:5, active:true },
   { nameAr:'عبدالله القحطاني', nameEn:'Abdullah Al-Qahtani', roleAr:'صاحب مصنع', roleEn:'Factory Owner', textAr:'فريق متخصص ومحترف، أنجزوا المشروع قبل الموعد المحدد بأسبوعين كاملين.', textEn:'Professional team, they completed the project two full weeks ahead of schedule.', stars:5, active:true },
 ];
 
 const SITEINFO = {
-  nameAr:'شركة لاين التطوير والإبداع', nameEn:'LINE Development and Innovation Co.',
+  nameAr:'لاين التطوير', nameEn:'LINE Development',
   address:'المملكة العربية السعودية',
   phone:'+966 55 430 0235',
   email:'Info@lineil.com',

@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const SiteInfoSchema = new mongoose.Schema({
-  nameAr:  { type: String, default: 'البناء الراسخ' },
-  nameEn:  { type: String, default: 'Solid Build Co.' },
+  nameAr:  { type: String, default: 'لاين التطوير' },
+  nameEn:  { type: String, default: 'LINE Development' },
   address: { type: String, default: '' },
   phone:   { type: String, default: '' },
   email:   { type: String, default: '' },
