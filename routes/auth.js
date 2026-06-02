@@ -23,7 +23,7 @@ router.post('/login', async (req, res) => {
   if (!match)
     return res.status(401).json({ success: false, message: 'اسم المستخدم أو كلمة المرور غير صحيحة' });
 
-  const token = jwt.sign({ username: u }, process.env.JWT_SECRET, { expiresIn: '7d' });
+  const token = jwt.sign({ username: u }, process.env.JWT_SECRET, { expiresIn: '90d' });
   res.json({ success: true, token, admin: { username: u } });
 });
 

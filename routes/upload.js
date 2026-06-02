@@ -18,14 +18,14 @@ function sendUploadResult(req, res) {
 }
 
 router.post('/logo', protect, (req, res, next) => {
-  uploadLogo.single('image')(req, res, (err) => {
+  uploadLogo(req, res, (err) => {
     if (err) return handleUploadError(err, req, res, next);
     sendUploadResult(req, res);
   });
 });
 
 router.post('/team', protect, (req, res, next) => {
-  uploadTeamPhoto.single('image')(req, res, (err) => {
+  uploadTeamPhoto(req, res, (err) => {
     if (err) return handleUploadError(err, req, res, next);
     sendUploadResult(req, res);
   });

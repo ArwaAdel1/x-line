@@ -288,6 +288,48 @@
       gap: 10px;
     }
 
+    .btn-pay {
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 800;
+      border: 1.5px solid rgba(24, 95, 165, 0.25);
+      color: white;
+      background: linear-gradient(135deg, var(--blue-600), var(--blue-400));
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+      font-family: inherit;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 10px 22px rgba(24, 95, 165, 0.22);
+      white-space: nowrap;
+    }
+
+    .btn-pay:visited,
+    .btn-pay:hover,
+    .btn-pay:focus,
+    .btn-pay:focus-visible {
+      color: #fff;
+    }
+
+    .btn-pay:focus-visible {
+      outline: 3px solid rgba(24, 95, 165, 0.35);
+      outline-offset: 2px;
+    }
+
+    .btn-pay:hover {
+      transform: translateY(-1px);
+      filter: saturate(1.05);
+      box-shadow: 0 14px 28px rgba(24, 95, 165, 0.28);
+    }
+
+    .btn-pay:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 18px rgba(24, 95, 165, 0.2);
+    }
+
     .btn-lang {
       padding: 7px 14px;
       border-radius: 8px;
@@ -1752,6 +1794,10 @@
     .admin-logout {
       padding: 16px 12px;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
+      position: sticky;
+      bottom: 0;
+      background: var(--blue-900);
+      z-index: 5;
     }
 
     .admin-logout-btn {
@@ -1774,6 +1820,45 @@
       background: rgba(255, 0, 0, 0.1);
       border-color: rgba(255, 100, 100, 0.3);
       color: #ff9999;
+    }
+
+    .admin-fixed-link {
+      padding: 14px 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .admin-fixed-link strong {
+      display: block;
+      color: rgba(255, 255, 255, 0.75);
+      margin-bottom: 8px;
+      font-size: 12px;
+    }
+
+    .admin-fixed-link code {
+      display: block;
+      font-size: 10px;
+      word-break: break-all;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.55);
+      margin-bottom: 8px;
+    }
+
+    .admin-copy-link {
+      width: 100%;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.06);
+      color: white;
+      font-size: 12px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .admin-copy-link:hover {
+      background: rgba(255, 255, 255, 0.12);
     }
 
     .admin-main {
@@ -2565,6 +2650,10 @@
       <li><a onclick="goPage('contact')" id="nav-contact">تواصل معنا</a></li>
     </ul>
     <div class="nav-actions">
+      <a class="btn-pay" href="https://tasnifelmoqawlin.com/?utm_source=brevo&utm_medium=email&utm_campaign=%20%20875" target="_blank" rel="noopener noreferrer" id="nav-pay">
+        <span aria-hidden="true">💳</span>
+        <span>الخدمات والدفع</span>
+      </a>
       <button class="btn-lang" onclick="toggleLang()" id="lang-btn">EN</button>
       <div class="hamburger" onclick="toggleMobileMenu()">
         <span></span><span></span><span></span>
@@ -2577,6 +2666,7 @@
     <a onclick="goPage('home');toggleMobileMenu()" id="mob-home">الرئيسية</a>
     <a onclick="goPage('about');toggleMobileMenu()" id="mob-about">من نحن</a>
     <a onclick="goPage('services');toggleMobileMenu()" id="mob-services">خدماتنا</a>
+    <a href="https://tasnifelmoqawlin.com/?utm_source=brevo&utm_medium=email&utm_campaign=%20%20875" target="_blank" rel="noopener noreferrer" id="mob-pay">الخدمات والدفع</a>
     <a onclick="goPage('projects');toggleMobileMenu()" id="mob-projects">أعمالنا</a>
     <a onclick="goPage('team');toggleMobileMenu()" id="mob-team">فريق العمل</a>
     <a onclick="goPage('faqs');toggleMobileMenu()" id="mob-faqs">الأسئلة الشائعة</a>
@@ -3044,40 +3134,49 @@
       </div>
       <nav class="admin-nav">
         <div class="admin-nav-label">الرئيسية</div>
-        <div class="admin-nav-item active" onclick="adminSection('dashboard')">
+        <div class="admin-nav-item active" data-sec="dashboard" onclick="adminSection('dashboard', this)">
           <span class="admin-nav-icon">📊</span>
           <span class="nav-text" id="adnav-dash">لوحة البيانات</span>
         </div>
         <div class="admin-nav-label">المحتوى</div>
-        <div class="admin-nav-item" onclick="adminSection('team-admin')">
+        <div class="admin-nav-item" data-sec="team-admin" onclick="adminSection('team-admin', this)">
           <span class="admin-nav-icon">👥</span>
           <span class="nav-text" id="adnav-team">فريق العمل</span>
         </div>
-        <div class="admin-nav-item" onclick="adminSection('services-admin')">
+        <div class="admin-nav-item" data-sec="services-admin" onclick="adminSection('services-admin', this)">
           <span class="admin-nav-icon">🏗️</span>
           <span class="nav-text" id="adnav-svc">الخدمات</span>
         </div>
-        <div class="admin-nav-item" onclick="adminSection('projects-admin')">
+        <div class="admin-nav-item" data-sec="projects-admin" onclick="adminSection('projects-admin', this)">
           <span class="admin-nav-icon">📁</span>
           <span class="nav-text" id="adnav-proj">المشاريع</span>
         </div>
-        <div class="admin-nav-item" onclick="adminSection('messages-admin')">
+        <div class="admin-nav-item" data-sec="messages-admin" onclick="adminSection('messages-admin', this)">
           <span class="admin-nav-icon">✉️</span>
           <span class="nav-text" id="adnav-msg">الرسائل</span>
         </div>
-        <div class="admin-nav-item" onclick="adminSection('blogs-admin')">
+        <div class="admin-nav-item" data-sec="blogs-admin" onclick="adminSection('blogs-admin', this)">
           <span class="admin-nav-icon">📰</span>
           <span class="nav-text" id="adnav-blogs">الأخبار</span>
         </div>
-        <div class="admin-nav-item" onclick="adminSection('faqs-admin')">
+        <div class="admin-nav-item" data-sec="faqs-admin" onclick="adminSection('faqs-admin', this)">
           <span class="admin-nav-icon">❓</span>
           <span class="nav-text" id="adnav-faqs">الأسئلة الشائعة</span>
         </div>
-        <div class="admin-nav-item" onclick="adminSection('info-admin')">
+        <div class="admin-nav-item" data-sec="info-admin" onclick="adminSection('info-admin', this)">
           <span class="admin-nav-icon">ℹ️</span>
           <span class="nav-text" id="adnav-info">معلومات الشركة</span>
         </div>
+        <div class="admin-nav-label" id="admin-links-label">روابط</div>
+        <a class="admin-nav-item" href="/" target="_blank" rel="noopener noreferrer" id="admin-xline-link">
+          <span class="admin-nav-icon">🌐</span>
+          <span class="nav-text" id="adnav-xline">موقع X-Line</span>
+        </a>
       </nav>
+      <div class="admin-fixed-link">
+        <strong id="admin-link-label">🔗 رابطك الثابت</strong>
+        <code id="admin-fixed-url"></code>
+      </div>
       <div class="admin-logout">
         <button class="admin-logout-btn" onclick="doLogout()">
           <span>🚪</span>
@@ -3225,7 +3324,7 @@
                   onchange="handleLogoUpload(event)">
                 <button class="btn-add" onclick="document.getElementById('logo-upload-input').click()">📁 رفع
                   لوجو</button>
-                <p style="font-size:12px;color:var(--gray-400);margin-top:6px;">PNG, JPG, SVG — يفضل خلفية شفافة (PNG)
+                <p style="font-size:12px;color:var(--gray-400);margin-top:6px;">PNG, JPG, SVG — حتى 10 ميجابايت — يفضل خلفية شفافة (PNG)
                 </p>
                 <button onclick="removeLogo()"
                   style="background:none;border:none;color:#A32D2D;font-size:12px;cursor:pointer;margin-top:4px;padding:0;">✕
@@ -3356,6 +3455,77 @@
       return json.data;
     }
 
+    async function compressImageForUpload(file, opts = {}) {
+      const {
+        maxWidth = 1600,
+        maxHeight = 1600,
+        outputType = 'image/webp',
+        initialQuality = 0.82,
+        minQuality = 0.55,
+        targetMaxBytes = 9.5 * 1024 * 1024,
+      } = opts;
+
+      if (!file || !file.type?.startsWith('image/')) return file;
+
+      // Avoid huge memory usage from extremely large inputs
+      if (file.size > 40 * 1024 * 1024) {
+        throw new Error(lang === 'ar' ? 'الملف كبير جدًا. رجاءً صغّر الصورة قبل الرفع.' : 'File is too large. Please resize before upload.');
+      }
+
+      // If already small enough, keep it
+      if (file.size <= targetMaxBytes) return file;
+
+      let bitmap;
+      try {
+        bitmap = await createImageBitmap(file);
+      } catch {
+        // Fallback for older browsers
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(file);
+        await new Promise((resolve, reject) => {
+          img.onload = resolve;
+          img.onerror = reject;
+        });
+        bitmap = img;
+      }
+
+      const srcW = bitmap.width;
+      const srcH = bitmap.height;
+      const scale = Math.min(1, maxWidth / srcW, maxHeight / srcH);
+      const dstW = Math.max(1, Math.round(srcW * scale));
+      const dstH = Math.max(1, Math.round(srcH * scale));
+
+      const canvas = document.createElement('canvas');
+      canvas.width = dstW;
+      canvas.height = dstH;
+      const ctx = canvas.getContext('2d');
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(bitmap, 0, 0, dstW, dstH);
+
+      const toBlob = (quality, type) =>
+        new Promise((resolve) => canvas.toBlob(resolve, type, quality));
+
+      let quality = initialQuality;
+      let blob = await toBlob(quality, outputType);
+
+      // If webp fails, fall back to jpeg
+      if (!blob) {
+        blob = await toBlob(quality, 'image/jpeg');
+      }
+
+      while (blob && blob.size > targetMaxBytes && quality > minQuality) {
+        quality = Math.max(minQuality, quality - 0.08);
+        blob = await toBlob(quality, blob.type || outputType);
+      }
+
+      if (!blob) return file;
+
+      const ext = blob.type === 'image/png' ? 'png' : blob.type === 'image/webp' ? 'webp' : 'jpg';
+      const safeName = (file.name || 'image').replace(/\.\w+$/, '');
+      return new File([blob], `${safeName}.${ext}`, { type: blob.type, lastModified: Date.now() });
+    }
+
     function cloudinaryImg(url, width) {
       if (!url) return '';
       if (!url.includes('cloudinary.com') || url.startsWith('data:')) return url;
@@ -3480,7 +3650,7 @@
     const t = {
       ar: {
         brand: 'لاين للتطوير',
-        navHome: 'الرئيسية', navAbout: 'من نحن', navServices: 'خدماتنا', navTeam: 'فريق العمل', navProjects: 'أعمالنا', navFaqs: 'الأسئلة الشائعة', navNews: 'أخبارنا', navContact: 'تواصل معنا',
+        navHome: 'الرئيسية', navAbout: 'من نحن', navServices: 'خدماتنا', navPay: 'الخدمات والدفع', navTeam: 'فريق العمل', navProjects: 'أعمالنا', navFaqs: 'الأسئلة الشائعة', navNews: 'أخبارنا', navContact: 'تواصل معنا',
         loginBtn: 'تسجيل دخول', langBtn: 'EN',
         heroBadge: 'شركة لاين التطوير والإبداع',
         heroLine1: 'نبني أحلامك', heroLine2: 'بأيدٍ موثوقة',
@@ -3540,7 +3710,8 @@
         newsH1: 'أخبارنا', newsHeroP: 'آخر المستجدات والإنجازات', newsEmpty: 'لا توجد أخبار حالياً',
         faqsH1: 'الأسئلة الشائعة', faqsHeroP: 'إجابات على أكثر الأسئلة شيوعاً',
         faqsTag: 'الأسئلة', faqsTitle: 'هل لديك ', faqsTitleBlue: 'سؤال؟', faqsDesc: 'نجيب على كل استفساراتك بشفافية ووضوح', faqsEmpty: 'لا توجد أسئلة حالياً',
-        adnav: { dash: 'لوحة البيانات', team: 'فريق العمل', svc: 'الخدمات', proj: 'المشاريع', msg: 'الرسائل', blogs: 'الأخبار', faqs: 'الأسئلة', info: 'معلومات الشركة' },
+        adnav: { dash: 'لوحة البيانات', team: 'فريق العمل', svc: 'الخدمات', proj: 'المشاريع', msg: 'الرسائل', blogs: 'الأخبار', faqs: 'الأسئلة', info: 'معلومات الشركة', xline: 'موقع X-Line' },
+        adminLinksLabel: 'روابط',
         admWelcome: 'مرحباً، Admin! 👋', admWelcomeP: 'إليك ملخص بيانات الموقع',
         admStats: [{ label: 'المشاريع المنجزة' }, { label: 'عدد الخدمات' }, { label: 'أعضاء الفريق' }, { label: 'الرسائل الجديدة' }],
         recentMsgH: 'آخر الرسائل',
@@ -3554,7 +3725,7 @@
       },
       en: {
         brand: 'LINE Dev',
-        navHome: 'Home', navAbout: 'About', navServices: 'Services', navTeam: 'Our Team', navProjects: 'Our Work', navFaqs: 'FAQs', navNews: 'News', navContact: 'Contact',
+        navHome: 'Home', navAbout: 'About', navServices: 'Services', navPay: 'Services & Payment', navTeam: 'Our Team', navProjects: 'Our Work', navFaqs: 'FAQs', navNews: 'News', navContact: 'Contact',
         loginBtn: 'Login', langBtn: 'عربي',
         heroBadge: 'LINE Development and Innovation Co.',
         heroLine1: 'We Build Your Dreams', heroLine2: 'With Trusted Hands',
@@ -3614,7 +3785,8 @@
         newsH1: 'News', newsHeroP: 'Latest updates and achievements', newsEmpty: 'No news at the moment',
         faqsH1: 'FAQs', faqsHeroP: 'Answers to the most common questions',
         faqsTag: 'Questions', faqsTitle: 'Have A ', faqsTitleBlue: 'Question?', faqsDesc: 'We answer all your inquiries with transparency and clarity', faqsEmpty: 'No questions at the moment',
-        adnav: { dash: 'Dashboard', team: 'Team', svc: 'Services', proj: 'Projects', msg: 'Messages', blogs: 'News', faqs: 'FAQs', info: 'Company Info' },
+        adnav: { dash: 'Dashboard', team: 'Team', svc: 'Services', proj: 'Projects', msg: 'Messages', blogs: 'News', faqs: 'FAQs', info: 'Company Info', xline: 'X-Line Website' },
+        adminLinksLabel: 'Links',
         admWelcome: 'Welcome, Admin! 👋', admWelcomeP: 'Here is your site data summary',
         admStats: [{ label: 'Completed Projects' }, { label: 'Services' }, { label: 'Team Members' }, { label: 'New Messages' }],
         recentMsgH: 'Recent Messages',
@@ -3636,6 +3808,36 @@
 
     // ===== PAGE NAVIGATION =====
     const ADMIN_DASHBOARD_PATH = '/admin-dashboard';
+    const ADMIN_SECTIONS = ['dashboard', 'team-admin', 'services-admin', 'projects-admin', 'messages-admin', 'blogs-admin', 'faqs-admin', 'info-admin'];
+
+    function getAdminSectionFromUrl() {
+      const hash = (location.hash || '').replace('#', '').trim();
+      return ADMIN_SECTIONS.includes(hash) ? hash : 'info-admin';
+    }
+
+    function getAdminFixedUrl(section) {
+      const sec = section || getAdminSectionFromUrl();
+      return location.origin + ADMIN_DASHBOARD_PATH + '#' + sec;
+    }
+
+    function updateAdminFixedLink() {
+      const el = document.getElementById('admin-fixed-url');
+      if (el) el.textContent = getAdminFixedUrl(getAdminSectionFromUrl());
+    }
+
+    function copyAdminLink() {
+      const url = getAdminFixedUrl(getAdminSectionFromUrl());
+      navigator.clipboard.writeText(url).then(() => {
+        showToast(lang === 'ar' ? 'تم نسخ الرابط ✅' : 'Link copied ✅');
+      }).catch(() => {
+        showToast(url, 'success');
+      });
+    }
+
+    function openPublicSite() {
+      const url = location.origin + '/';
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
 
     function pathToPage(pathname) {
       const path = (pathname || '/').replace(/\/$/, '') || '/';
@@ -3670,13 +3872,14 @@
       document.getElementById('navbar').style.display = 'flex';
 
       if (page === 'admin') {
-        // verify token first
         if (!authToken) { goPage('login'); return; }
-        apiFetch('/auth/me').then(() => {
+        apiFetch('/auth/me').then(async () => {
           document.getElementById('admin-page').classList.add('active');
           document.getElementById('site-footer').style.display = 'none';
           document.getElementById('navbar').style.display = 'none';
-          loadAdminData();
+          await loadAdminData();
+          openAdminSection(getAdminSectionFromUrl());
+          updateAdminFixedLink();
         }).catch(() => {
           authToken = null; localStorage.removeItem('sb_token');
           goPage('login');
@@ -3719,6 +3922,12 @@
       goPage(page, { skipUrl: true });
     });
 
+    window.addEventListener('hashchange', () => {
+      if (currentPage === 'admin' && document.getElementById('admin-page')?.classList.contains('active')) {
+        openAdminSection(getAdminSectionFromUrl());
+      }
+    });
+
     // ===== MOBILE MENU =====
     function toggleMobileMenu() {
       document.getElementById('mobile-menu').classList.toggle('open');
@@ -3739,9 +3948,11 @@
       const s = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
       s('nav-brand', T.brand);
       s('nav-home', T.navHome); s('nav-about', T.navAbout); s('nav-services', T.navServices);
+      s('nav-pay', T.navPay);
       s('nav-team', T.navTeam); s('nav-projects', T.navProjects); s('nav-faqs', T.navFaqs); s('nav-news', T.navNews); s('nav-contact', T.navContact);
       s('lang-btn', T.langBtn);
       s('mob-home', T.navHome); s('mob-about', T.navAbout); s('mob-services', T.navServices);
+      s('mob-pay', T.navPay);
       s('mob-team', T.navTeam); s('mob-projects', T.navProjects); s('mob-faqs', T.navFaqs); s('mob-news', T.navNews); s('mob-contact', T.navContact);
       s('hero-badge-text', T.heroBadge);
       s('hero-line1', T.heroLine1); s('hero-line2', T.heroLine2); s('hero-sub', T.heroSub);
@@ -3768,6 +3979,7 @@
       s('user-label', T.userLabel); s('pass-label', T.passLabel);
       s('login-do-btn', T.loginDoBtn); s('login-back', T.loginBack);
       s('login-error', T.loginError);
+      s('admin-link-label', lang === 'ar' ? '🔗 رابطك الثابت' : '🔗 Your admin link');
       s('footer-brand-name', T.brand); s('footer-desc', T.footerDesc);
       s('footer-quick', T.footerQuick); s('footer-svc-h', T.footerSvcH); s('footer-contact-h', T.footerContactH);
       s('footer-copy', T.footerCopy);
@@ -3784,6 +3996,8 @@
       s('faqs-tag', T.faqsTag); s('faqs-desc', T.faqsDesc);
       s('adnav-dash', T.adnav.dash); s('adnav-team', T.adnav.team); s('adnav-svc', T.adnav.svc);
       s('adnav-proj', T.adnav.proj); s('adnav-msg', T.adnav.msg); s('adnav-blogs', T.adnav.blogs); s('adnav-faqs', T.adnav.faqs); s('adnav-info', T.adnav.info);
+      s('adnav-xline', T.adnav.xline);
+      s('admin-links-label', T.adminLinksLabel);
       s('logout-text', T.logoutText);
       // section titles with blue span
       const svcTitleEl = document.getElementById('svc-title');
@@ -3983,6 +4197,9 @@
         authToken = res.token;
         localStorage.setItem('sb_token', authToken);
         err.classList.remove('show');
+        if (location.pathname.replace(/\/$/, '') !== ADMIN_DASHBOARD_PATH) {
+          history.replaceState({ page: 'admin' }, '', ADMIN_DASHBOARD_PATH + '#info-admin');
+        }
         goPage('admin');
       }).catch(e => {
         err.textContent = e.message || t[lang].loginError;
@@ -4001,12 +4218,23 @@
     }
 
     // ===== ADMIN =====
-    function adminSection(sec) {
+    function adminSection(sec, el) {
+      openAdminSection(sec, el);
+    }
+
+    function openAdminSection(sec, navEl) {
+      if (!ADMIN_SECTIONS.includes(sec)) sec = 'info-admin';
       document.querySelectorAll('.admin-nav-item').forEach(el => el.classList.remove('active'));
-      event.currentTarget.classList.add('active');
+      const item = navEl || document.querySelector('.admin-nav-item[data-sec="' + sec + '"]');
+      if (item) item.classList.add('active');
       document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
-      document.getElementById('sec-' + sec).classList.add('active');
+      const sectionEl = document.getElementById('sec-' + sec);
+      if (sectionEl) sectionEl.classList.add('active');
       currentAdminSection = sec;
+      if (location.pathname.replace(/\/$/, '') === ADMIN_DASHBOARD_PATH) {
+        history.replaceState({ page: 'admin', section: sec }, '', ADMIN_DASHBOARD_PATH + '#' + sec);
+      }
+      updateAdminFixedLink();
     }
 
     function renderAdminDashboard() {
@@ -4137,13 +4365,9 @@
         .catch(err => showToast(err.message, 'error'));
     }
 
-    function saveInfo() {
+    function getSiteInfoBody() {
       const logo = window._siteLogoUrl || '';
-      if (logo.startsWith('data:')) {
-        showToast(lang === 'ar' ? 'ارفع اللوجو مرة أخرى عبر زر الرفع' : 'Re-upload the logo using the upload button', 'error');
-        return;
-      }
-      const body = {
+      return {
         nameAr: document.getElementById('info-name-ar').value,
         nameEn: document.getElementById('info-name-en').value,
         address: document.getElementById('info-address').value,
@@ -4151,13 +4375,26 @@
         email: document.getElementById('info-email').value,
         logo,
       };
-      apiFetch('/siteinfo', { method: 'PUT', body: JSON.stringify(body) })
-        .then(() => {
-          const succ = document.getElementById('info-success');
+    }
+
+    async function saveSiteInfoAuto(silent) {
+      const logo = window._siteLogoUrl || '';
+      if (logo.startsWith('data:')) {
+        throw new Error(lang === 'ar' ? 'ارفع اللوجو عبر زر الرفع' : 'Upload logo using the upload button');
+      }
+      await apiFetch('/siteinfo', { method: 'PUT', body: JSON.stringify(getSiteInfoBody()) });
+      if (!silent) {
+        const succ = document.getElementById('info-success');
+        if (succ) {
           succ.classList.add('show');
           setTimeout(() => succ.classList.remove('show'), 2500);
-          showToast(lang === 'ar' ? 'تم الحفظ بنجاح ✅' : 'Saved successfully ✅');
-        })
+        }
+      }
+    }
+
+    function saveInfo() {
+      saveSiteInfoAuto(false)
+        .then(() => showToast(lang === 'ar' ? 'تم الحفظ بنجاح ✅' : 'Saved successfully ✅'))
         .catch(err => showToast(err.message, 'error'));
     }
 
@@ -4187,7 +4424,7 @@
           <div>
             <input type="file" id="team-photo-input" accept="image/*" style="display:none" onchange="previewTeamPhoto(event)">
             <button type="button" class="btn-add" onclick="document.getElementById('team-photo-input').click()">${lang === 'ar' ? '📁 رفع صورة' : '📁 Upload Photo'}</button>
-            <p style="font-size:11px;color:var(--gray-400);margin-top:5px;">${lang === 'ar' ? 'JPG أو PNG — حجم مناسب للصورة الشخصية' : 'JPG or PNG — portrait photo recommended'}</p>
+            <p style="font-size:11px;color:var(--gray-400);margin-top:5px;">${lang === 'ar' ? 'JPG أو PNG — حتى 10 ميجابايت' : 'JPG or PNG — up to 10MB'}</p>
             ${hasPhoto ? `<button type="button" onclick="clearTeamPhoto()" style="background:none;border:none;color:#A32D2D;font-size:12px;cursor:pointer;padding:0;">${lang === 'ar' ? '✕ حذف الصورة' : '✕ Remove photo'}</button>` : ''}
           </div>
         </div>
@@ -4275,11 +4512,17 @@
       overlay.classList.add('open');
     }
 
-    function saveTeamMember() {
+    function canAutoSaveTeamPhoto() {
+      return currentModal === 'edit-team'
+        && document.getElementById('m-namear')?.value.trim()
+        && document.getElementById('m-nameen')?.value.trim();
+    }
+
+    function saveTeamMember(silent) {
       const photo = document.getElementById('m-photo').value;
       if (photo.startsWith('data:')) {
         showToast(lang === 'ar' ? 'انتظر اكتمال رفع الصورة أو ارفعها من جديد' : 'Wait for upload to finish or upload again', 'error');
-        return;
+        return Promise.reject();
       }
       const member = {
         photo,
@@ -4294,13 +4537,17 @@
       const isEdit = currentModal === 'edit-team';
       const url = isEdit ? '/team/' + data.team[currentModalIndex]._id : '/team';
       const method = isEdit ? 'PUT' : 'POST';
-      apiFetch(url, { method, body: JSON.stringify(member) })
+      return apiFetch(url, { method, body: JSON.stringify(member) })
         .then(() => {
-          showToast(isEdit ? (lang === 'ar' ? 'تم التعديل ✅' : 'Updated ✅') : (lang === 'ar' ? 'تمت الإضافة ✅' : 'Added ✅'));
-          closeModal();
+          if (silent) {
+            showToast(lang === 'ar' ? 'تم رفع وحفظ الصورة على الموقع ✅' : 'Photo uploaded and saved ✅');
+          } else {
+            showToast(isEdit ? (lang === 'ar' ? 'تم التعديل ✅' : 'Updated ✅') : (lang === 'ar' ? 'تمت الإضافة ✅' : 'Added ✅'));
+            closeModal();
+          }
           loadAdminData();
         })
-        .catch(err => showToast(err.message, 'error'));
+        .catch(err => { showToast(err.message, 'error'); throw err; });
     }
 
     function saveService() {
@@ -4390,17 +4637,21 @@
     async function previewTeamPhoto(event) {
       const file = event.target.files[0];
       if (!file) return;
-      if (file.size > 5 * 1024 * 1024) {
-        showToast(lang === 'ar' ? 'حجم الصورة أكبر من 5 ميجابايت' : 'Image is larger than 5MB', 'error');
-        return;
-      }
       const preview = document.getElementById('team-photo-preview');
       preview.innerHTML = '<span style="font-size:12px">...</span>';
       try {
-        const uploaded = await uploadToCloudinary(file, 'team');
+        const compressed = await compressImageForUpload(file, { maxWidth: 1400, maxHeight: 1400, outputType: 'image/webp' });
+        if (compressed.size > 10 * 1024 * 1024) {
+          throw new Error(lang === 'ar' ? 'بعد الضغط ما زال حجم الصورة كبيرًا. صغّرها قبل الرفع.' : 'Even after compression the image is too large. Please resize before upload.');
+        }
+        const uploaded = await uploadToCloudinary(compressed, 'team');
         document.getElementById('m-photo').value = uploaded.url;
         preview.innerHTML = `<img src="${cloudinaryImg(uploaded.url, 200)}" style="width:100%;height:100%;object-fit:cover;">`;
-        showToast(lang === 'ar' ? 'تم رفع الصورة ✅' : 'Photo uploaded ✅');
+        if (canAutoSaveTeamPhoto()) {
+          await saveTeamMember(true);
+        } else {
+          showToast(lang === 'ar' ? 'تم رفع الصورة — اضغطي حفظ لإضافة العضو' : 'Photo uploaded — click Save to add member');
+        }
       } catch (err) {
         preview.innerHTML = document.getElementById('m-emoji').value || '👨‍💼';
         showToast(err.message, 'error');
@@ -4423,16 +4674,17 @@
     async function handleLogoUpload(event) {
       const file = event.target.files[0];
       if (!file) return;
-      if (file.size > 5 * 1024 * 1024) {
-        showToast(lang === 'ar' ? 'حجم الصورة أكبر من 5 ميجابايت' : 'Image is larger than 5MB', 'error');
-        return;
-      }
       try {
         showToast(lang === 'ar' ? 'جارٍ رفع اللوجو...' : 'Uploading logo...');
-        const uploaded = await uploadToCloudinary(file, 'logo');
+        const compressed = await compressImageForUpload(file, { maxWidth: 1600, maxHeight: 800, outputType: 'image/webp' });
+        if (compressed.size > 10 * 1024 * 1024) {
+          throw new Error(lang === 'ar' ? 'بعد الضغط ما زال حجم اللوجو كبيرًا. صغّره قبل الرفع.' : 'Even after compression the logo is too large. Please resize before upload.');
+        }
+        const uploaded = await uploadToCloudinary(compressed, 'logo');
         window._siteLogoUrl = uploaded.url;
         applyLogo(cloudinaryImg(uploaded.url, 300));
-        showToast(lang === 'ar' ? 'تم رفع اللوجو ✅' : 'Logo uploaded ✅');
+        await saveSiteInfoAuto(true);
+        showToast(lang === 'ar' ? 'تم رفع وحفظ اللوجو على الموقع ✅' : 'Logo uploaded and saved ✅');
       } catch (err) {
         showToast(err.message, 'error');
       }
