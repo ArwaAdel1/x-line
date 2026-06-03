@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const protect = require('../middleware/auth');
-const { uploadLogo, uploadTeamPhoto, handleUploadError } = require('../middleware/upload');
+const { uploadLogo, uploadTeamPhoto, uploadProjectPhoto, uploadBlogPhoto, handleUploadError } = require('../middleware/upload');
+const { deleteLocalImage } = require('../utils/localFiles');
 const { deleteFromCloudinary } = require('../utils/cloudinary');
 
 function sendUploadResult(req, res) {
@@ -31,10 +32,30 @@ router.post('/team', protect, (req, res, next) => {
   });
 });
 
+router.post('/project', protect, (req, res, next) => {
+  uploadProjectPhoto(req, res, (err) => {
+    if (err) return handleUploadError(err, req, res, next);
+    sendUploadResult(req, res);
+  });
+});
+
+router.post('/blog', protect, (req, res, next) => {
+  uploadBlogPhoto(req, res, (err) => {
+    if (err) return handleUploadError(err, req, res, next);
+    sendUploadResult(req, res);
+  });
+});
+
 router.delete('/image', protect, async (req, res) => {
   try {
     const { url, publicId } = req.body;
-    await deleteFromCloudinary(publicId || url);
+    const target = url || publicId;
+    // الصور الجديدة مخزّنة محليًا
+    const deletedLocal = await deleteLocalImage(target);
+    // توافق رجعي: لو الرابط قديم من Cloudinary نحذفه من هناك
+    if (!deletedLocal) {
+      await deleteFromCloudinary(publicId || url);
+    }
     res.json({ success: true, message: 'تم حذف الصورة' });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });

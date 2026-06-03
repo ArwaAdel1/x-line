@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 
 const BlogSchema = new mongoose.Schema({
   emoji:     { type: String, default: '📰' },
+  photo:     { type: String, default: '' },
+  photos:    { type: [String], default: [] },
   titleAr:   { type: String, required: true },
   titleEn:   { type: String, required: true },
   excerptAr: { type: String, default: '' },

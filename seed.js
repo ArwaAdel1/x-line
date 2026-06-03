@@ -31,17 +31,31 @@ const TEAM = [
 ];
 
 const PROJECTS = [
-  { nameAr:'برج الأعمال المركزي', nameEn:'Central Business Tower', statusAr:'منجز', statusEn:'Completed', year:2023, active:true, order:1 },
-  { nameAr:'مجمع الوحدات السكنية', nameEn:'Residential Complex', statusAr:'جارٍ', statusEn:'In Progress', year:2024, active:true, order:2 },
-  { nameAr:'مستشفى الأمل الجديد', nameEn:'New Hope Hospital', statusAr:'منجز', statusEn:'Completed', year:2022, active:true, order:3 },
-  { nameAr:'مشروع الطريق السريع', nameEn:'Highway Project', statusAr:'مخطط', statusEn:'Planned', year:2025, active:true, order:4 },
-];
+  { nameAr:'برج الأعمال المركزي', nameEn:'Central Business Tower',
+    photos:['https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=900&q=80','https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=900&q=80','https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=900&q=80'],
+    statusAr:'منجز', statusEn:'Completed', year:2023, active:true, order:1 },
+  { nameAr:'مجمع الوحدات السكنية', nameEn:'Residential Complex',
+    photos:['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&q=80','https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=80'],
+    statusAr:'جارٍ', statusEn:'In Progress', year:2024, active:true, order:2 },
+  { nameAr:'مستشفى الأمل الجديد', nameEn:'New Hope Hospital',
+    photos:['https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=900&q=80','https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=900&q=80'],
+    statusAr:'منجز', statusEn:'Completed', year:2022, active:true, order:3 },
+  { nameAr:'مشروع الطريق السريع', nameEn:'Highway Project',
+    photos:['https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=900&q=80'],
+    statusAr:'مخطط', statusEn:'Planned', year:2025, active:true, order:4 },
+].map(p => ({ ...p, photo: p.photos[0] || '' }));
 
 const BLOGS = [
-  { emoji:'🏗️', titleAr:'إنجاز برج الأعمال المركزي بالرياض', titleEn:'Completion of Central Business Tower in Riyadh', excerptAr:'أعلنت شركة لاين التطوير عن إتمام مشروع برج الأعمال المركزي في قلب الرياض بنجاح تام وفي الموعد المحدد.', excerptEn:'LINE Development announced the successful completion of the Central Business Tower project in the heart of Riyadh, on schedule.', tagAr:'إنجازات', tagEn:'Achievements', date:'2024-03-15', active:true },
-  { emoji:'💡', titleAr:'تبني تقنية BIM في جميع مشاريعنا', titleEn:'Adopting BIM Technology Across All Our Projects', excerptAr:'تعتمد الشركة اليوم تقنية نمذجة معلومات البناء BIM كمعيار أساسي في جميع مشاريعها.', excerptEn:'The company now adopts BIM technology as a core standard across all its projects.', tagAr:'تقنية', tagEn:'Technology', date:'2024-01-20', active:true },
-  { emoji:'🏆', titleAr:'نحصد جائزة أفضل شركة مقاولات 2024', titleEn:'We Win Best Construction Company Award 2024', excerptAr:'حصدت شركة لاين التطوير جائزة أفضل شركة مقاولات للعام 2024 من مجلس المقاولين السعوديين.', excerptEn:'LINE Development won the Best Construction Company Award for 2024 from the Saudi Contractors Council.', tagAr:'جوائز', tagEn:'Awards', date:'2023-12-05', active:true },
-];
+  { emoji:'🏗️', titleAr:'إنجاز برج الأعمال المركزي بالرياض', titleEn:'Completion of Central Business Tower in Riyadh',
+    photos:['https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=900&q=80','https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=900&q=80'],
+    excerptAr:'أعلنت شركة لاين التطوير عن إتمام مشروع برج الأعمال المركزي في قلب الرياض بنجاح تام وفي الموعد المحدد.', excerptEn:'LINE Development announced the successful completion of the Central Business Tower project in the heart of Riyadh, on schedule.', tagAr:'إنجازات', tagEn:'Achievements', date:'2024-03-15', active:true },
+  { emoji:'💡', titleAr:'تبني تقنية BIM في جميع مشاريعنا', titleEn:'Adopting BIM Technology Across All Our Projects',
+    photos:['https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=900&q=80','https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=900&q=80'],
+    excerptAr:'تعتمد الشركة اليوم تقنية نمذجة معلومات البناء BIM كمعيار أساسي في جميع مشاريعها.', excerptEn:'The company now adopts BIM technology as a core standard across all its projects.', tagAr:'تقنية', tagEn:'Technology', date:'2024-01-20', active:true },
+  { emoji:'🏆', titleAr:'نحصد جائزة أفضل شركة مقاولات 2024', titleEn:'We Win Best Construction Company Award 2024',
+    photos:['https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=900&q=80'],
+    excerptAr:'حصدت شركة لاين التطوير جائزة أفضل شركة مقاولات للعام 2024 من مجلس المقاولين السعوديين.', excerptEn:'LINE Development won the Best Construction Company Award for 2024 from the Saudi Contractors Council.', tagAr:'جوائز', tagEn:'Awards', date:'2023-12-05', active:true },
+].map(b => ({ ...b, photo: b.photos[0] || '' }));
 
 const FAQS = [
   { questionAr:'ما هي المناطق الجغرافية التي تخدمونها؟', questionEn:'What geographic areas do you serve?', answerAr:'نخدم جميع مناطق المملكة العربية السعودية مع التركيز على الرياض وجدة والمنطقة الشرقية.', answerEn:'We serve all regions of Saudi Arabia with a focus on Riyadh, Jeddah, and the Eastern Province.', active:true, order:1 },

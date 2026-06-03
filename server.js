@@ -27,6 +27,8 @@ app.get('/api/health', (req, res) => {
 
 // ─── Serve Frontend ───────────────────────────────────────────────────
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
+// الصور المرفوعة محليًا (تُحفظ عبر multer + sharp)
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'), { maxAge: '7d' }));
 app.use(express.static(path.join(__dirname, 'client')));
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client', 'index.html'));

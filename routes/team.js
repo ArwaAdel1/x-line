@@ -2,6 +2,7 @@ const router  = require('express').Router();
 const protect = require('../middleware/auth');
 const Team    = require('../models/Team');
 const { deleteFromCloudinary } = require('../utils/cloudinary');
+const { deleteLocalImage } = require('../utils/localFiles');
 
 router.get('/', async (req, res) => {
   const docs = await Team.find({ active: true }).sort({ order: 1 });
@@ -26,8 +27,9 @@ router.put('/:id', protect, async (req, res) => {
     const oldPhoto = existing.photo;
     const doc = await Team.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
 
-    if (oldPhoto && req.body.photo !== oldPhoto && oldPhoto.includes('cloudinary.com')) {
-      await deleteFromCloudinary(oldPhoto);
+    if (oldPhoto && req.body.photo !== oldPhoto) {
+      if (oldPhoto.startsWith('/uploads/')) await deleteLocalImage(oldPhoto);
+      else if (oldPhoto.includes('cloudinary.com')) await deleteFromCloudinary(oldPhoto);
     }
 
     res.json({ success: true, data: doc });
@@ -39,8 +41,9 @@ router.put('/:id', protect, async (req, res) => {
 router.delete('/:id', protect, async (req, res) => {
   try {
     const doc = await Team.findById(req.params.id);
-    if (doc?.photo?.includes('cloudinary.com')) {
-      await deleteFromCloudinary(doc.photo);
+    if (doc?.photo) {
+      if (doc.photo.startsWith('/uploads/')) await deleteLocalImage(doc.photo);
+      else if (doc.photo.includes('cloudinary.com')) await deleteFromCloudinary(doc.photo);
     }
     await Team.findByIdAndDelete(req.params.id);
     res.json({ success: true, message: 'تم الحذف' });
